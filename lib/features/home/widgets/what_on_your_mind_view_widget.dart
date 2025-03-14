@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
+import '../../../common/widgets/custom_image_widget.dart';
+
 class WhatOnYourMindViewWidget extends StatelessWidget {
   const WhatOnYourMindViewWidget({super.key});
 

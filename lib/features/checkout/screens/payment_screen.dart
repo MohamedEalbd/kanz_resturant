@@ -236,12 +236,26 @@ class MyInAppBrowser extends InAppBrowser {
     bool forSubscription = (subscriptionUrl != null && subscriptionUrl!.isNotEmpty && addFundUrl == '' && addFundUrl!.isEmpty);
 
     if(_canRedirect) {
+      Uri uri = Uri.parse(url);
+      String? message = uri.queryParameters['message'];
+
       bool isSuccess = forSubscription ? url.startsWith('${AppConstants.baseUrl}/subscription-success')
           : url.startsWith('${AppConstants.baseUrl}/payment-success');
       bool isFailed = forSubscription ? url.startsWith('${AppConstants.baseUrl}/subscription-fail')
           : url.startsWith('${AppConstants.baseUrl}/payment-fail');
       bool isCancel = forSubscription ? url.startsWith('${AppConstants.baseUrl}/subscription-cancel')
           : url.startsWith('${AppConstants.baseUrl}/payment-cancel');
+
+      if (message != null && message.toUpperCase() == 'APPROVED') {
+        print("Payment is approved ✅");
+        print(uri.queryParameters['message']);
+        _canRedirect = false;
+        close();
+        _orderPaymentDoneDecision(true, isFailed, isCancel);
+      } else {
+        print("Payment is not approved ❌");
+        _decideSubscriptionOrWallet(isSuccess, isFailed, isCancel, restaurantId, packageId);
+      }
       if (isSuccess || isFailed || isCancel) {
         _canRedirect = false;
         close();

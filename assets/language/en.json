@@ -1189,7 +1189,16 @@
   "confirm": "Confirm",
   "my_order": "My Order",
   "search_your_desired_foods_or_restaurants":"search your desired foods or restaurants",
-  "trending_food_Offers":"Trending Food Offers"
-  
+  "trending_food_Offers":"Trending Food Offers",
+  "all_food": "All Food",
+  "knz_surprises": "knz surprises",
+  "It_offers_you_many_surprises": "It offers you many surprises and saves you money. Get the same meals with discounts starting from 50%",
+  "Try_Knz_now": "Try Knz now",
+  "Book_your_order_early_today": "Book your order early today or tomorrow, choose the appropriate branch and receive your food fresh and immediately",
+  "Participate_with_us": "Participate with us",
+  "Be_part_of_preserving_the_environment": "Be part of preserving the environment and participate with us in the #LetItLast initiative to sustain the blessing",
+  "remaining": "remaining",
+  "sar": "SAR",
+  "Restaurant_and_branch": "Restaurant and branch"
   
 }
