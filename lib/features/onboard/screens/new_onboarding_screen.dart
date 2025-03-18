@@ -48,7 +48,7 @@ class NewOnboardingScreen extends StatelessWidget {
                     //     MaterialPageRoute(builder: (_) => NewLanguageScreen()));
                   },
                   child: Text(
-                    'Skip',
+                    'skip'.tr,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -67,14 +67,14 @@ class NewOnboardingScreen extends StatelessWidget {
                     return Stack(
                       children: [
                         Positioned(
-                          bottom: 150,
-                          left: MediaQuery.of(context).size.width / 2.8,
+                          bottom: 160,
+                          left: MediaQuery.of(context).size.width / 3.3,
+                         // right: MediaQuery.of(context).size.width / 1.2,
                           child: Align(
                             alignment: Alignment.center,
                             child: Image.asset(
-                              Images.phoneImg,
-                              // Replace with your phone mockup image
-                              height: 300,
+                              AppConstants.newOnBoarList[index].img!,
+                              height: 320,
                             ),
                           ),
                         ),
@@ -82,7 +82,7 @@ class NewOnboardingScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: SizedBox(
-                            height: 300,
+                            height: 260,
                             child: Container(
                               //margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                               padding: EdgeInsets.all(16),
@@ -131,7 +131,7 @@ class NewOnboardingScreen extends StatelessWidget {
                                   ),
                                   Spacer(),
                                   BuildButtonWidget(
-                                    txt: 'Continue',
+                                    txt: 'continue'.tr,
                                     onTap: () {
                                       if(onBoardingController.selectedIndex != 2) {
                                         _pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.ease);

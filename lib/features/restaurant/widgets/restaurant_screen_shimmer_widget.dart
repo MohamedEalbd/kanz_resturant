@@ -41,7 +41,7 @@ class RestaurantScreenShimmerWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                 child: Shimmer(
                   child: Container(
-                    height: 90, width: 90,
+                    height: 90, width: 77,
                     decoration: BoxDecoration(
                       color: Theme.of(context).shadowColor,
                       borderRadius: BorderRadius.circular(Dimensions.radiusSmall),

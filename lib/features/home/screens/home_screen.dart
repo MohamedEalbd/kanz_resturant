@@ -190,9 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: ResponsiveHelper.isDesktop(context) ? WebHomeScreen(
                 scrollController: _scrollController,
-              ) : (Get.find<SplashController>().configModel!.theme == 2) ? Theme1HomeScreen(
+              ) : (Get.find<SplashController>().configModel!.theme == 2) ?
+              Theme1HomeScreen(
                 scrollController: _scrollController,
-              ) : CustomScrollView(
+              )
+                  : CustomScrollView(
                 controller: _scrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [

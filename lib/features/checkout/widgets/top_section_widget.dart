@@ -174,14 +174,14 @@ class TopSectionWidget extends StatelessWidget {
 
                 SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: [
 
-                  (Get.find<SplashController>().configModel!.homeDelivery! && checkoutController.restaurant!.delivery!)
-                      ? DeliveryOptionButton(
-                    value: 'delivery', title: 'home_delivery'.tr, charge: charge,
-                    isFree: checkoutController.restaurant!.freeDelivery, total: total,
-                    chargeForView: deliveryChargeForView, deliveryFeeTooltipController: deliveryFeeTooltipController,
-                    badWeatherCharge: badWeatherCharge, extraChargeForToolTip: extraChargeForToolTip,
-                  ) : const SizedBox(),
-                  const SizedBox(width: Dimensions.paddingSizeDefault),
+                  // (Get.find<SplashController>().configModel!.homeDelivery! && checkoutController.restaurant!.delivery!)
+                  //     ? DeliveryOptionButton(
+                  //   value: 'delivery', title: 'home_delivery'.tr, charge: charge,
+                  //   isFree: checkoutController.restaurant!.freeDelivery, total: total,
+                  //   chargeForView: deliveryChargeForView, deliveryFeeTooltipController: deliveryFeeTooltipController,
+                  //   badWeatherCharge: badWeatherCharge, extraChargeForToolTip: extraChargeForToolTip,
+                  // ) : const SizedBox(),
+                  // const SizedBox(width: Dimensions.paddingSizeDefault),
 
                   (Get.find<SplashController>().configModel!.takeAway! && checkoutController.restaurant!.takeAway!)
                       ? DeliveryOptionButton(

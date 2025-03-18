@@ -41,22 +41,22 @@ class TrackDetailsView extends StatelessWidget {
         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
         child: Column(children: [
 
-          Text('estimate_delivery_time'.tr, style: robotoRegular),
+         // Text('estimate_delivery_time'.tr, style: robotoRegular),
 
-          Center(
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-
-              Text(
-                DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt) < 5 ? '1 - 5'
-                    : '${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)-5} '
-                    '- ${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)}',
-                style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge), textDirection: TextDirection.ltr,
-              ),
-              const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-
-              Text('min'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge)),
-            ]),
-          ),
+          // Center(
+          //   child: Row(mainAxisSize: MainAxisSize.min, children: [
+          //
+          //     Text(
+          //       DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt) < 5 ? '1 - 5'
+          //           : '${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)-5} '
+          //           '- ${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)}',
+          //       style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge), textDirection: TextDirection.ltr,
+          //     ),
+          //     const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+          //
+          //     Text('min'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge)),
+          //   ]),
+          // ),
 
         ]),
       ) : Column(children: [
@@ -70,24 +70,24 @@ class TrackDetailsView extends StatelessWidget {
         ),
         const SizedBox(height: Dimensions.paddingSizeLarge),
 
-        Text('estimate_delivery_time'.tr, style: robotoRegular),
+        //Text('estimate_delivery_time'.tr, style: robotoRegular),
 
-        Center(
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
+        // Center(
+        //   child: Row(mainAxisSize: MainAxisSize.min, children: [
+        //
+        //     Text(
+        //       DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt) < 5 ? '1 - 5'
+        //           : '${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)-5} '
+        //           '- ${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)}',
+        //       style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge), textDirection: TextDirection.ltr,
+        //     ),
+        //     const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+        //
+        //     Text('min'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge)),
+        //   ]),
+        // ),
 
-            Text(
-              DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt) < 5 ? '1 - 5'
-                  : '${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)-5} '
-                  '- ${DateConverter.differenceInMinute(track.restaurant!.deliveryTime, track.createdAt, track.processingTime, track.scheduleAt)}',
-              style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge), textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-
-            Text('min'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge)),
-          ]),
-        ),
-
-        Divider(color: Theme.of(context).disabledColor.withOpacity(0.3), thickness: 1, height: 30),
+       // Divider(color: Theme.of(context).disabledColor.withOpacity(0.3), thickness: 1, height: 30),
 
         takeAway ? InkWell(
           onTap: () async {

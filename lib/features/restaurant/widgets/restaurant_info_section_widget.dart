@@ -53,7 +53,8 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
               expandedTitleScale: isDesktop ? 1 : 1.1,
               title: CustomizableSpaceBarWidget(
                 builder: (context, scrollingRate) {
-                  return !isDesktop ? Container(
+                  return !isDesktop ?
+                  Container(
                     color: Theme.of(context).cardColor.withOpacity(scrollingRate),
                     padding: EdgeInsets.only(
                       bottom: 0,
@@ -88,7 +89,8 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ) : Align(
+                  ) :
+                  Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
                       height: restaurant.announcementActive! ? 200 : 160,

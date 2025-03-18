@@ -200,7 +200,7 @@ class CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
                       flagWidth: 25,
                       padding: EdgeInsets.zero,
                       onChanged: widget.onCountryChanged,
-                      initialSelection: '+20',
+                      initialSelection: '+966',
                       favorite: ['+20', '+966'],
                       enabled: Get.find<SplashController>().configModel?.countryPickerStatus,
                       dialogBackgroundColor: Theme.of(context).cardColor,

@@ -1,4 +1,7 @@
 class Images {
+  static const String onboard1 = 'assets/image/onboard1.png';
+  static const String onboard2 = 'assets/image/onboard2.png';
+  static const String onboard3 = 'assets/image/onboard3.png';
   static const String logo = 'assets/image/logo.png';
   static const String logoName = 'assets/image/logo.png';
   static const String placeholder = 'assets/image/placeholder.svg';
@@ -383,5 +386,6 @@ class Images {
   static const String sendChat2 = "assets/image/send.png";
   static const String friends = "assets/image/friends.png";
   static const String friends2 = "assets/icons/friends.svg";
+  static const String myMoney = "assets/icons/money.svg";
   static const String foodDetails = "assets/image/food_details.png";
 }

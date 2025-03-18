@@ -5,6 +5,7 @@ import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.
 import 'package:stackfood_multivendor/features/dashboard/domain/repositories/dashboard_repo.dart';
 import 'package:stackfood_multivendor/features/dashboard/domain/repositories/dashboard_repo_interface.dart';
 import 'package:stackfood_multivendor/features/home/controllers/advertisement_controller.dart';
+import 'package:stackfood_multivendor/features/home/controllers/suggest_products_controller.dart';
 import 'package:stackfood_multivendor/features/home/domain/repositories/advertisement_repository.dart';
 import 'package:stackfood_multivendor/features/home/domain/repositories/advertisement_repository_interface.dart';
 import 'package:stackfood_multivendor/features/home/domain/services/advertisement_service.dart';
@@ -170,6 +171,11 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
+import '../features/my_food/controller/foods_controller.dart';
+import '../features/my_food/controller/foods_nearly_controller.dart';
+import '../features/my_food/domain/repository/food_repository.dart';
+import '../features/my_food/domain/repository/food_repository_imp.dart';
+
 Future<Map<String, Map<String, String>>> init() async {
   /// Core
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -177,6 +183,10 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
 
   ///Interfaces
+  FoodRepository foodRe= FoodRepositoryImp(apiClient: Get.find());
+  Get.lazyPut(() => foodRe);
+  FoodRepositoryImp foodRepositoryImp= FoodRepositoryImp(apiClient: Get.find());
+  Get.lazyPut(() => foodRepositoryImp);
   LocationRepoInterface locationRepoInterface = LocationRepo(apiClient: Get.find());
   Get.lazyPut(() => locationRepoInterface);
   LocationServiceInterface locationServiceInterface = LocationService(locationRepoInterface: Get.find());
@@ -337,6 +347,9 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => RestaurantController(restaurantServiceInterface: Get.find()));
   Get.lazyPut(() => ReferAndEarnController());
   Get.lazyPut(() => SearchController(searchServiceInterface: Get.find()));
+  Get.lazyPut(() => SuggestProductsController(searchServiceInterface: Get.find()));
+  Get.lazyPut(() => FoodsController(foodRepository: Get.find(), apiClient: Get.find()));
+  Get.lazyPut(() => FoodsNearlyController(foodRepository: Get.find(), apiClient: Get.find(),));
   Get.lazyPut(() => CouponController(couponServiceInterface: Get.find()));
   Get.lazyPut(() => OrderController(orderServiceInterface: Get.find()));
   Get.lazyPut(() => CampaignController(campaignServiceInterface: Get.find()));

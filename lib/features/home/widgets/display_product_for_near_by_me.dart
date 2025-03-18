@@ -1,270 +1,144 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+// import 'package:logger/logger.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_asset_image_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_favourite_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
-import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
-import 'package:stackfood_multivendor/features/home/controllers/advertisement_controller.dart';
-import 'package:stackfood_multivendor/features/home/domain/models/advertisement_model.dart';
-import 'package:stackfood_multivendor/features/search/controllers/search_controller.dart' as search;
-import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
+import 'package:stackfood_multivendor/features/home/controllers/suggest_products_controller.dart';
+import 'package:stackfood_multivendor/features/home/widgets/theme1/custom_container_distplay_foods.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_screen.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/images.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:stackfood_multivendor/util/color_resources.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../common/models/product_model.dart';
-import '../../auth/controllers/auth_controller.dart';
-import '../../cuisine/controllers/cuisine_controller.dart';
-import '../../search/controllers/search_controller.dart';
+import '../../../common/models/restaurant_model.dart';
+import '../../../common/widgets/custom_asset_image_widget.dart';
+import '../../../helper/route_helper.dart';
+import '../../../util/dimensions.dart';
+import '../../../util/images.dart';
+import '../../../util/styles.dart';
+import '../../language/controllers/localization_controller.dart';
+import '../../my_food/controller/foods_nearly_controller.dart';
+import '../controllers/advertisement_controller.dart';
+import '../domain/models/advertisement_model.dart';
 
-class HighlightWidgetView extends StatefulWidget {
-  const HighlightWidgetView({super.key});
+class DisplayProductForNearByMe extends StatefulWidget {
+  const DisplayProductForNearByMe({super.key});
 
   @override
-  State<HighlightWidgetView> createState() => _HighlightWidgetViewState();
+  State<DisplayProductForNearByMe> createState() => _DisplayProductForNearByMeState();
 }
 
-class _HighlightWidgetViewState extends State<HighlightWidgetView> {
+class _DisplayProductForNearByMeState extends State<DisplayProductForNearByMe> {
   final ScrollController scrollController = ScrollController();
-
+  final CarouselSliderController _carouselController = CarouselSliderController();
   late bool _isLoggedIn;
-  final TextEditingController _searchTextEditingController = TextEditingController();
-
-  List<String> _foodsAndRestaurants = <String>[];
-  bool _showSuggestion = false;
+  // Logger logger =Logger();
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _isLoggedIn = Get.find<AuthController>().isLoggedIn();
-    Get.find<search.SearchController>().setSearchMode(true, canUpdate: false);
-    if(_isLoggedIn) {
-      Get.find<search.SearchController>().getSuggestedFoods();
-    }
-    Get.find<CuisineController>().getCuisineList();
-    Get.find<search.SearchController>().getHistoryList();
+    Get.find<FoodsNearlyController>().fetchFoodNearlyMe();
   }
-
-  final CarouselSliderController _carouselController = CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AdvertisementController>(builder: (advertisementController) {
-          return advertisementController.advertisementList != null && advertisementController.advertisementList!.isNotEmpty ? Padding(
-            padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeDefault),
-            child: Stack(
-              children: [
+    return GetBuilder<FoodsNearlyController>(builder: (foodsNearlyController) {
+      return  foodsNearlyController.myFood.isNotEmpty ? Padding(
+        padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeDefault),
+        child: Stack(
+          children: [
 
-                CustomAssetImageWidget(
-                  Images.highlightBg, width: context.width,
-                  fit: BoxFit.cover,
+            CustomAssetImageWidget(
+              Images.highlightBg, width: context.width,
+              fit: BoxFit.cover,
+            ),
+
+            Column(children: [
+
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeExtraSmall,
                 ),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
 
-                Column(children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('highlights_for_you'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black)),
+                      const SizedBox(width: 5),
 
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeExtraSmall,
-                    ),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('highlights_for_you'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black)),
-                          const SizedBox(width: 5),
-
-                          Text('see_our_most_popular_restaurant_and_foods'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall)),
-                        ],
-                      ),
-
-                      const CustomAssetImageWidget(
-                        Images.highlightIcon, height: 50, width: 50,
-                      ),
-
-                    ]),
+                      Text('see_our_most_popular_restaurant_and_foods'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall)),
+                    ],
                   ),
 
-                  CarouselSlider.builder(
-                    carouselController: _carouselController,
-                    itemCount:
-                    //searchController.allProductList!.length,
-                    advertisementController.advertisementList!.length,
-                    options: CarouselOptions(
-                      enableInfiniteScroll: advertisementController.advertisementList!.length > 2,
-                      autoPlay: advertisementController.autoPlay,
-                      enlargeCenterPage: false,
-                      height: 280,
-                      viewportFraction: 1,
-                      disableCenter: true,
-                      onPageChanged: (index, reason) {
-
-                        advertisementController.setCurrentIndex(index, true);
-
-                        if(advertisementController.advertisementList?[index].addType == "video_promotion"){
-                          advertisementController.updateAutoPlayStatus(status: false);
-                        }else{
-                          advertisementController.updateAutoPlayStatus(status: true);
-                        }
-
-                      },
-                    ),
-                    itemBuilder: (context, index, realIndex) {
-                      return
-                        //HighlightRestaurantWidget(product: searchController.allProductList![index]);
-                        advertisementController.advertisementList?[index].addType == 'video_promotion' ? HighlightVideoWidget(
-                        advertisement: advertisementController.advertisementList![index],
-                      ) : HighlightRestaurantWidget(advertisement: advertisementController.advertisementList![index]);
-                    },
+                  const CustomAssetImageWidget(
+                    Images.highlightIcon, height: 50, width: 50,
                   ),
-
-                  const AdvertisementIndicator(),
-
-                  const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
 
                 ]),
-              ],
-            ),
-          ) : advertisementController.advertisementList == null ? const AdvertisementShimmer() : const SizedBox();
+              ),
+              CarouselSlider(options: CarouselOptions(
+                autoPlay: true,
+                enlargeCenterPage: false,
+                height: 280,
+                viewportFraction: 1,
+                disableCenter: true,
+              ), items: foodsNearlyController.myFood.map((food){
+          return Builder(builder: (context){
+          return   HighlightFoodsWidget(food:food );
+
+          });
+              }).toList(),),
+              // CarouselSlider.builder(
+              //   carouselController: _carouselController,
+              //   itemCount:
+              //   //searchController.allProductList!.length,
+              //   suggestProductsController.suggestedFoodList!.length,
+              //   options: CarouselOptions(
+              //     enableInfiniteScroll: suggestProductsController.suggestedFoodList!.length > 2,
+              //     autoPlay: true,//advertisementController.autoPlay,
+              //     enlargeCenterPage: false,
+              //     height: 280,
+              //     viewportFraction: 1,
+              //     disableCenter: true,
+              //     // onPageChanged: (index, reason) {
+              //     //
+              //     //   advertisementController.setCurrentIndex(index, true);
+              //     //
+              //     //   if(advertisementController.suggestedFoodList?[index]==0){//.addType == "video_promotion"
+              //     //     advertisementController.updateAutoPlayStatus(status: false);
+              //     //   }else{
+              //     //     advertisementController.updateAutoPlayStatus(status: true);
+              //     //   }
+              //     //
+              //     // },
+              //   ),
+              //
+              //   itemBuilder: (context, index, realIndex) {
+              //     return
+              //       HighlightRestaurantWidget(product: suggestProductsController.suggestedFoodList![index]);
+              //       // advertisementController.advertisementList?[index].addType == 'video_promotion' ? HighlightVideoWidget(
+              //       //   advertisement: advertisementController.advertisementList![index],
+              //       // ) : HighlightRestaurantWidget(advertisement: advertisementController.advertisementList![index]);
+              //   },
+              // ),
+
+              const AdvertisementIndicator(),
+
+              const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+
+            ]),
+          ],
+        ),
+      ) : foodsNearlyController.myFood.isNotEmpty ? const AdvertisementShimmer() : const SizedBox();
 
     });
-  }
-}
-
-class HighlightRestaurantWidget extends StatelessWidget {
-  final AdvertisementModel advertisement;
-  //final Product product;
-  const HighlightRestaurantWidget({super.key, required this.advertisement});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      height: 280,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-        color: Theme.of(context).cardColor,
-        border: Border.all(color: Theme.of(context).disabledColor.withOpacity(0.07), width: 2),
-      ),
-      child: InkWell(
-        onTap: (){
-          Get.toNamed(RouteHelper.getRestaurantRoute(advertisement.restaurantId),
-            arguments: RestaurantScreen(restaurant: Restaurant(id: advertisement.restaurantId)),
-          );
-        },
-        child: Column(children: [
-
-          Expanded(
-            flex: 5,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusDefault)),
-              child: Stack(
-                children: [
-                  CustomImageWidget(
-                    image: advertisement.profileImageFullUrl ?? '',
-                    fit: BoxFit.cover, height: 160, width: double.infinity,
-                  ),
-
-                  (advertisement.isRatingActive == 1 || advertisement.isReviewActive == 1) ? Positioned(
-                    right: 10, bottom: 10,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: Theme.of(context).cardColor, width: 2),
-                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 0)],
-                      ),
-                      child: Row(
-                        children: [
-                          advertisement.isRatingActive == 1 ? Icon(Icons.star, color: Theme.of(context).cardColor, size: 15) : const SizedBox(),
-                          SizedBox(width: advertisement.isRatingActive == 1 ? 5 : 0),
-
-                          advertisement.isRatingActive == 1 ? Text('${advertisement.averageRating?.toStringAsFixed(1)}', style: robotoBold.copyWith(color: Theme.of(context).cardColor)) : const SizedBox(),
-                          SizedBox(width: advertisement.isRatingActive == 1 ? 5 : 0),
-
-                          advertisement.isReviewActive == 1 ? Text('(${advertisement.reviewsCommentsCount})', style: robotoRegular.copyWith(color: Theme.of(context).cardColor)) : const SizedBox(),
-                        ],
-                      ),
-                    ),
-                  ) : const SizedBox(),
-
-                ],
-              ),
-            ),
-          ),
-
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(children: [
-
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.1), width: 2),
-                  ),
-                  child: ClipOval(
-                    child: CustomImageWidget(
-                      image: advertisement.profileImageFullUrl ?? '',
-                      height: 60, width: 60, fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                Flexible(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-
-                      Flexible(
-                        child: Text(
-                            advertisement.title ?? '', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600),
-                          maxLines: 1, overflow: TextOverflow.ellipsis
-                        ),
-                      ),
-
-                      GetBuilder<FavouriteController>(builder: (favouriteController) {
-                        bool isWished = favouriteController.wishRestIdList.contains(advertisement.restaurantId);
-                        return CustomFavouriteWidget(
-                          isWished: isWished,
-                          isRestaurant: true,
-                          restaurantId: advertisement.restaurantId,
-                        );
-                      }),
-
-                    ]),
-                    const SizedBox(height: 3),
-
-                    Text(
-                      advertisement.description ?? '',
-                      style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor),
-                      maxLines: 2, overflow: TextOverflow.ellipsis,
-                    ),
-
-                  ]),
-                ),
-
-
-              ]),
-            ),
-          ),
-
-        ]),
-      ),
-    );
   }
 }
 
@@ -413,8 +287,8 @@ class AdvertisementIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return GetBuilder<AdvertisementController>(builder: (advertisementController) {
-      return advertisementController.advertisementList != null && advertisementController.advertisementList!.length > 2 ?
+    return GetBuilder<SuggestProductsController>(builder: (suggestProductsController) {
+      return suggestProductsController.suggestedFoodList != null && suggestProductsController.suggestedFoodList!.length > 2 ?
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Container(height: 7, width: 7,
           decoration:  BoxDecoration(color: Theme.of(context).primaryColor,
@@ -422,15 +296,15 @@ class AdvertisementIndicator extends StatelessWidget {
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center,
-          children: advertisementController.advertisementList!.map((advertisement) {
-            int index = advertisementController.advertisementList!.indexOf(advertisement);
-            return index == advertisementController.currentIndex ? Container(
+          children: suggestProductsController.suggestedFoodList!.map((advertisement) {
+            int index = suggestProductsController.suggestedFoodList!.indexOf(advertisement);
+            return index == suggestProductsController.currentIndex ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 3),
               margin: const EdgeInsets.symmetric(horizontal: 6.0),
               decoration: BoxDecoration(
                   color:  Theme.of(context).primaryColor ,
                   borderRadius: BorderRadius.circular(50)),
-              child:  Text("${index+1}/ ${advertisementController.advertisementList!.length}",
+              child:  Text("${index+1}/ ${suggestProductsController.suggestedFoodList!.length}",
                 style: const TextStyle(color: Colors.white,fontSize: 12),),
             ):const SizedBox();
           }).toList(),
@@ -442,12 +316,12 @@ class AdvertisementIndicator extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
-      ]): advertisementController.advertisementList != null && advertisementController.advertisementList!.length == 2 ?
+      ]): suggestProductsController.suggestedFoodList != null && suggestProductsController.suggestedFoodList!.length == 2 ?
       Align(
         alignment: Alignment.center,
         child: AnimatedSmoothIndicator(
-          activeIndex: advertisementController.currentIndex,
-          count: advertisementController.advertisementList!.length,
+          activeIndex: suggestProductsController.currentIndex,
+          count: suggestProductsController.suggestedFoodList!.length,
           effect: ExpandingDotsEffect(
             dotHeight: 7,
             dotWidth: 7,
@@ -615,3 +489,6 @@ class AdvertisementShimmer extends StatelessWidget {
     );
   }
 }
+
+
+

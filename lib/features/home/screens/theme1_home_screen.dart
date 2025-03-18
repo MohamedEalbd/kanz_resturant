@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stackfood_multivendor/features/my_food/controller/foods_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/home_screen.dart';
 import 'package:stackfood_multivendor/features/home/widgets/bad_weather_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/enjoy_off_banner_view_widget.dart';
@@ -28,6 +30,10 @@ import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.dart';
+
+
+import '../widgets/display_product_for_near_by_me.dart';
+import '../widgets/theme1/custom_container_distplay_foods.dart';
 
 class Theme1HomeScreen extends StatelessWidget {
   final ScrollController scrollController;
@@ -145,14 +151,15 @@ class Theme1HomeScreen extends StatelessWidget {
               const BadWeatherWidget(),
               const CategoryWidget1(),
               const ItemCampaignWidget1(),
-              const HighlightWidgetView(),
+              const DisplayProductForNearByMe(),
+              //const HighlightWidgetView(),
               isLogin ? const PopularStoreWidget1(isOrderAgainViewed: true, isPopular: false) : const SizedBox(),
               isLogin ? const OrderAgainViewWidget() : const SizedBox(),
               configModel.mostReviewedFoods == 1 ? const BestReviewedItemWidget1() : const SizedBox(),
               const ReferBannerViewWidget(fromTheme1: true),
               isLogin ? const PopularStoreWidget1(isPopular: false, isRecentlyViewed: true) : const SizedBox(),
               const CuisinesWidget1(),
-              configModel.popularRestaurant == 1 ? const PopularStoreWidget1(isPopular: true) : const SizedBox(),
+              //configModel.popularRestaurant == 1 ? const PopularStoreWidget1(isPopular: true) : const SizedBox(),
               const NearByButtonWidget1(),
               configModel.popularFood == 1 ? const PopularItemWidget1(isPopular: true) : const SizedBox(),
               configModel.newRestaurant == 1 ? const PopularStoreWidget1(isPopular: false) : const SizedBox(),
@@ -160,32 +167,44 @@ class Theme1HomeScreen extends StatelessWidget {
               const PromotionalBannerViewWidget(),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 15, 0, 5),
+                padding:  EdgeInsets.symmetric(horizontal: 10.w),
                 child: Row(children: [
-                  Expanded(child: Text(
-                    'all_restaurants'.tr,
+                  Expanded(child: Text("all_food".tr,
+                    //'all_restaurants'.tr,
                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
                   )),
                   const FilterViewWidget(),
                 ]),
               ),
 
-              GetBuilder<RestaurantController>(builder: (restaurantController) {
-                return PaginatedListViewWidget(
-                  scrollController: scrollController,
-                  totalSize: restaurantController.restaurantModel?.totalSize,
-                  offset: restaurantController.restaurantModel?.offset,
-                  onPaginate: (int? offset) async => await restaurantController.getRestaurantList(offset!, false),
-                  productView: ProductViewWidget(
-                    isRestaurant: true, products: null, showTheme1Restaurant: true,
-                    restaurants: restaurantController.restaurantModel?.restaurants,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,
-                      vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : 0,
-                    ),
-                  ),
-                );
-              }),
+              GetBuilder<FoodsController>(builder:(foodController){
+                final foods = foodController.foods;
+                return ListView.separated(
+                   shrinkWrap: true,
+                 physics: NeverScrollableScrollPhysics(),
+                 // controller: scrollController,
+                    itemBuilder: (context,index){
+                      return
+                        HighlightFoodsWidget(food: foods[index],);
+                    }, separatorBuilder: (context,index)=>SizedBox(height: 10.h), itemCount: foods.length);
+              } ),
+
+              // GetBuilder<RestaurantController>(builder: (restaurantController) {
+              //   return PaginatedListViewWidget(
+              //     scrollController: scrollController,
+              //     totalSize: restaurantController.restaurantModel?.totalSize,
+              //     offset: restaurantController.restaurantModel?.offset,
+              //     onPaginate: (int? offset) async => await restaurantController.getRestaurantList(offset!, false),
+              //     productView: ProductViewWidget(
+              //       isRestaurant: true, products: null, showTheme1Restaurant: true,
+              //       restaurants: restaurantController.restaurantModel?.restaurants,
+              //       padding: EdgeInsets.symmetric(
+              //         horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,
+              //         vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : 0,
+              //       ),
+              //     ),
+              //   );
+              // }),
 
             ]),
           )),

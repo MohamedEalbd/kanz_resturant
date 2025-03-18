@@ -240,7 +240,8 @@ class BottomSectionWidget extends StatelessWidget {
 
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Row(children: [
-                  Text('${'vat_tax'.tr} ${taxIncluded ? 'tax_included'.tr : ''}', style: robotoRegular),
+                  // ${taxIncluded ? 'tax_included'.tr : ''}
+                  Text('${'vat_tax'.tr} ', style: robotoRegular.copyWith(),overflow: TextOverflow.ellipsis,maxLines: 1,),
                   Text('($taxPercent%)', style: robotoRegular, textDirection: TextDirection.ltr),
                 ]),
                 Row(children: [

@@ -41,9 +41,24 @@ class OnBoardingController extends GetxController implements GetxService {
   // }
 
  static List<NewOnBoar> newOnBoarLists = [
-  NewOnBoar(img: Images.phoneImg,txt: "kenz surprises",des: "It offers you many surprises and saves you money. Get the same meals with discounts starting from 50%."),
-  NewOnBoar(img: Images.phoneImg,txt: "Try Kenz now",des: "Book your order early today or tomorrow, choose the appropriate branch and receive your food fresh and immediately"),
-  NewOnBoar(img: Images.phoneImg,txt: " Participate with us",des: "Be part of preserving the environment and participate with us in the #LetItLast initiative to sustain the blessing"),
+   NewOnBoar(
+       img: Images.onboard1,
+       txt: "knz_surprises".tr,
+       des:
+       "It_offers_you_many_surprises".tr),
+   NewOnBoar(
+       img: Images.onboard2,
+       txt: "Try_Knz_now".tr,
+       des:
+       "Book_your_order_early_today".tr),
+   NewOnBoar(
+       img: Images.onboard3,
+       txt: "Participate_with_us".tr,
+       des:
+       "Be_part_of_preserving_the_environment".tr),
+  // NewOnBoar(img: Images.phoneImg,txt: "kenz surprises",des: "It offers you many surprises and saves you money. Get the same meals with discounts starting from 50%."),
+  // NewOnBoar(img: Images.phoneImg,txt: "Try Kenz now",des: "Book your order early today or tomorrow, choose the appropriate branch and receive your food fresh and immediately"),
+  // NewOnBoar(img: Images.phoneImg,txt: " Participate with us",des: "Be part of preserving the environment and participate with us in the #LetItLast initiative to sustain the blessing"),
   ];
 
 }

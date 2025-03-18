@@ -22,7 +22,7 @@ class CouponViewWidget extends StatelessWidget {
         builder: (couponController) {
           return couponController.couponList!= null && couponController.couponList!.isNotEmpty ? Column(children: [
             SizedBox(
-              height: isDesktop ? 110 - (scrollingRate *  20) : 85 - (scrollingRate * 60),
+              height: isDesktop ? 110 - (scrollingRate *  20) : 80 - (scrollingRate * 60),
               width: double.infinity,
               child: CarouselSlider.builder(
                 options: CarouselOptions(

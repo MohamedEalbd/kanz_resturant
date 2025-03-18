@@ -16,6 +16,8 @@ class AppConstants {
   static const String baseUrl =
     //  'https://stackfood-admin.6amtech.com';
      "https://kanz.nixtzone.com";
+  static const String foodNearly = '/api/v1/foods/get-nearby-foods';
+  static const String getAllFood = '/api/v1/foods/get-all-foods';
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String restaurantProductUri = '/api/v1/products/latest';
@@ -245,15 +247,15 @@ class AppConstants {
   /// Languages
   static List<LanguageModel> languages = [
     LanguageModel(
-        imageUrl: Images.english,
-        languageName: 'English',
-        countryCode: 'US',
-        languageCode: 'en'),
-    LanguageModel(
         imageUrl: Images.arabic,
         languageName: 'عربى',
         countryCode: 'EG',
         languageCode: 'ar'),
+    LanguageModel(
+        imageUrl: Images.english,
+        languageName: 'English',
+        countryCode: 'US',
+        languageCode: 'en'),
     // LanguageModel(
     //     imageUrl: Images.spanish,
     //     languageName: 'Spanish',
@@ -268,15 +270,15 @@ class AppConstants {
 
   static List<LanguageModel> newLanguages = [
     LanguageModel(
-        imageUrl: Images.englishLan,
-        languageName: 'English',
-        countryCode: 'US',
-        languageCode: 'en'),
-    LanguageModel(
         imageUrl: Images.arabicLan,
         languageName: 'عربى',
         countryCode: 'SA',
         languageCode: 'ar'),
+    LanguageModel(
+        imageUrl: Images.englishLan,
+        languageName: 'English',
+        countryCode: 'US',
+        languageCode: 'en'),
   ];
 
   static List<String> joinDropdown = [
@@ -286,20 +288,17 @@ class AppConstants {
   ];
   static List<NewOnBoar> newOnBoarList = [
     NewOnBoar(
-        img: Images.phoneImg,
-        txt: "kenz surprises",
-        des:
-            "It offers you many surprises and saves you money. Get the same meals with discounts starting from 50%."),
+        img: Images.onboard1,
+        txt: "knz_surprises".tr,
+        des: "It_offers_you_many_surprises".tr),
     NewOnBoar(
-        img: Images.phoneImg,
-        txt: "Try Kenz now",
-        des:
-            "Book your order early today or tomorrow, choose the appropriate branch and receive your food fresh and immediately"),
+        img: Images.onboard2,
+        txt: "Try_Knz_now".tr,
+        des: "Book_your_order_early_today".tr),
     NewOnBoar(
-        img: Images.phoneImg,
-        txt: " Participate with us",
-        des:
-            "Be part of preserving the environment and participate with us in the #LetItLast initiative to sustain the blessing"),
+        img: Images.onboard3,
+        txt: "Participate_with_us".tr,
+        des: "Be_part_of_preserving_the_environment".tr),
   ];
 
   ///Wallet

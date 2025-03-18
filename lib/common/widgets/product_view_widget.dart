@@ -60,19 +60,24 @@ class ProductViewWidget extends StatelessWidget {
         itemCount: length,
         padding: padding,
         itemBuilder: (context, index) {
-          return showTheme1Restaurant ? RestaurantWidget(restaurant: restaurants![index], index: index, inStore: inRestaurantPage)
-              : isWebRestaurant! ? WebRestaurantWidget(restaurant: restaurants![index]) : ProductWidget(
+          return showTheme1Restaurant ?
+          RestaurantWidget(restaurant: restaurants![index], index: index, inStore: inRestaurantPage)
+              : isWebRestaurant! ? WebRestaurantWidget(restaurant: restaurants![index]) :
+          ProductWidget(
             isRestaurant: isRestaurant, product: isRestaurant ? null : products![index],
             restaurant: isRestaurant ? restaurants![index] : null, index: index, length: length, isCampaign: isCampaign,
             inRestaurant: inRestaurantPage,
           );
         },
-      ) : NoDataScreen(
+      ) :
+      NoDataScreen(
         isEmptyRestaurant: isRestaurant ? true : false,
         isEmptyWishlist: fromFavorite! ? true : false,
         isEmptySearchFood: fromSearch! ? true : false,
         title: noDataText ?? (isRestaurant ? 'there_is_no_restaurant'.tr : 'there_is_no_food'.tr),
-      ) : GridView.builder(
+      )
+          :
+      GridView.builder(
         key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: Dimensions.paddingSizeLarge,

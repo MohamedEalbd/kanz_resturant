@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiscountTagWidget extends StatelessWidget {
-  final double? discount;
+  final num? discount;
   final String? discountType;
   final double fromTop;
   final double fromLeft;

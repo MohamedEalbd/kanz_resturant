@@ -1,54 +1,44 @@
-import 'package:stackfood_multivendor/common/widgets/rating_bar_widget.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:stackfood_multivendor/features/my_food/controller/foods_controller.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/discount_tag_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/not_available_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:stackfood_multivendor/common/models/product_model.dart';
+import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
 
-class RestaurantWidget extends StatefulWidget {
+import '../../../common/models/restaurant_model.dart';
+import '../../../common/widgets/custom_snackbar_widget.dart';
+import '../../../common/widgets/discount_tag_widget.dart';
+import '../../../common/widgets/not_available_widget.dart';
+import '../../../common/widgets/rating_bar_widget.dart';
+import '../../../helper/responsive_helper.dart';
+import '../../../helper/route_helper.dart';
+import '../../../util/dimensions.dart';
+import '../../../util/styles.dart';
+import '../../auth/controllers/auth_controller.dart';
+import '../../favourite/controllers/favourite_controller.dart';
+import '../../my_food/domain/models/food_model.dart';
+import '../../restaurant/controllers/restaurant_controller.dart';
+import '../../restaurant/screens/restaurant_screen.dart';
+import '../../my_food/controller/foods_controller.dart';
+
+class DisplayAllFoods extends StatelessWidget {
   final Restaurant? restaurant;
   final int index;
   final bool inStore;
-  const RestaurantWidget({super.key, required this.restaurant, required this.index, this.inStore = false});
-
-  @override
-  State<RestaurantWidget> createState() => _RestaurantWidgetState();
-}
-
-class _RestaurantWidgetState extends State<RestaurantWidget> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Get.find<FoodsController>().fetchAllFood();
-  }
+  final FoodsModel? foodsModel;
+  const DisplayAllFoods({super.key, this.restaurant, required this.index, required this.inStore, this.foodsModel});
 
   @override
   Widget build(BuildContext context) {
     bool desktop = ResponsiveHelper.isDesktop(context);
-
     return InkWell(
       onTap: () {
 
-        if(widget.restaurant != null && widget.restaurant!.restaurantStatus == 1){
+        if(restaurant != null && restaurant!.restaurantStatus == 1){
           Get.toNamed(
-            RouteHelper.getRestaurantRoute(widget.restaurant!.id),
-            arguments: RestaurantScreen(restaurant: widget.restaurant),
+            RouteHelper.getRestaurantRoute(restaurant!.id),
+            arguments: RestaurantScreen(restaurant: restaurant),
           );
-        }else if(widget.restaurant!.restaurantStatus == 0){
+        }else if(restaurant!.restaurantStatus == 0){
           showCustomSnackBar('restaurant_is_not_available'.tr);
         }
       },
@@ -65,17 +55,17 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
             ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusSmall)),
                 child: CustomImageWidget(
-                  image: '${widget.restaurant!.coverPhotoFullUrl}',
+                  image: '${foodsModel!.imageFullUrl}',
                   height: context.width * 0.3, width: Dimensions.webMaxWidth, fit: BoxFit.cover,
                   isRestaurant: true,
                 )
             ),
             DiscountTagWidget(
-              discount: Get.find<RestaurantController>().getDiscount(widget.restaurant!),
-              discountType: Get.find<RestaurantController>().getDiscountType(widget.restaurant!),
-              freeDelivery: widget.restaurant!.freeDelivery,
+              discount: Get.find<FoodsController>().getDiscount(foodsModel!),
+              discountType: Get.find<FoodsController>().getDiscountType(foodsModel!),
+              freeDelivery: restaurant!.freeDelivery,
             ),
-            Get.find<RestaurantController>().isOpenNow(widget.restaurant!) ? const SizedBox() : const NotAvailableWidget(isRestaurant: true),
+            Get.find<RestaurantController>().isOpenNow(restaurant!) ? const SizedBox() : const NotAvailableWidget(isRestaurant: true),
           ]),
 
           Expanded(child: Padding(
@@ -86,51 +76,50 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
 
                   Text(
-                    widget.restaurant!.name!,
+                    foodsModel!.name!,
                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
                     maxLines: desktop ? 2 : 1, overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
 
-                  (widget.restaurant!.address != null) ? Text(
-                    widget.restaurant!.address ?? '',
+                  (restaurant!.address != null) ? Text(
+                    restaurant!.address ?? '',
                     style: robotoRegular.copyWith(
                       fontSize: Dimensions.fontSizeExtraSmall,
                       color: Theme.of(context).disabledColor,
                     ),
                     maxLines: 1, overflow: TextOverflow.ellipsis,
                   ) : const SizedBox(),
-                  SizedBox(height: widget.restaurant!.address != null ? 2 : 0),
+                  SizedBox(height: restaurant!.address != null ? 2 : 0),
 
                   RatingBarWidget(
-                    rating: widget.restaurant!.avgRating, size: desktop ? 15 : 12,
-                    ratingCount: widget.restaurant!.ratingCount,
+                    rating: foodsModel!.avgRating!.toDouble(), size: desktop ? 15 : 12,
+                    ratingCount: restaurant!.ratingCount,
                   ),
-
                 ]),
               ),
               const SizedBox(width: Dimensions.paddingSizeSmall),
 
-              GetBuilder<FavouriteController>(builder: (favouriteController) {
-                bool isWished = favouriteController.wishRestIdList.contains(widget.restaurant!.id);
-                return InkWell(
-                  onTap: () {
-                    if(Get.find<AuthController>().isLoggedIn()) {
-                      isWished ? favouriteController.removeFromFavouriteList(widget.restaurant!.id, true)
-                          : favouriteController.addToFavouriteList(null, widget.restaurant?.id, true);
-                    }else {
-                      showCustomSnackBar('you_are_not_logged_in'.tr);
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: desktop ? Dimensions.paddingSizeSmall : 0),
-                    child: Icon(
-                      isWished ? Icons.favorite : Icons.favorite_border,  size: desktop ? 30 : 25,
-                      color: isWished ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
-                    ),
-                  ),
-                );
-              }),
+              // GetBuilder<FavouriteController>(builder: (favouriteController) {
+              //   bool isWished = favouriteController.wishRestIdList.contains(restaurant!.id);
+              //   return InkWell(
+              //     onTap: () {
+              //       if(Get.find<AuthController>().isLoggedIn()) {
+              //         isWished ? favouriteController.removeFromFavouriteList(restaurant!.id, true)
+              //             : favouriteController.addToFavouriteList(null, restaurant?.id, true);
+              //       }else {
+              //         showCustomSnackBar('you_are_not_logged_in'.tr);
+              //       }
+              //     },
+              //     child: Padding(
+              //       padding: EdgeInsets.symmetric(vertical: desktop ? Dimensions.paddingSizeSmall : 0),
+              //       child: Icon(
+              //         isWished ? Icons.favorite : Icons.favorite_border,  size: desktop ? 30 : 25,
+              //         color: isWished ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+              //       ),
+              //     ),
+              //   );
+              // }),
 
             ]),
           )),
@@ -198,4 +187,3 @@ class RestaurantShimmer extends StatelessWidget {
     );
   }
 }
-

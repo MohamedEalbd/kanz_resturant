@@ -294,7 +294,8 @@ class ProductWidget extends StatelessWidget {
                       );
                     }),
 
-                    !isRestaurant ? GetBuilder<CartController>(
+                    !isRestaurant ?
+                    GetBuilder<CartController>(
                         builder: (cartController) {
                           int cartQty = cartController.cartQuantity(product!.id!);
                           int cartIndex = cartController.isExistInCart(product!.id, null);
