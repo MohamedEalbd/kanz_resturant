@@ -77,32 +77,32 @@ class OrderInfoSection extends StatelessWidget {
           boxShadow: [BoxShadow(color: isDesktop ? Colors.black.withOpacity(0.05) : Theme.of(context).primaryColor.withOpacity(0.05), blurRadius: 10)],
         ) : null,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          DateConverter.isBeforeTime(order.scheduleAt) ? (!cancelled && ongoing && !subscription) ? Column(children: [
+          // DateConverter.isBeforeTime(order.scheduleAt) ? (!cancelled && ongoing && !subscription) ? Column(children: [
 
-            ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset(order.orderStatus == 'pending' ? Images.pendingOrderDetails : (order.orderStatus == 'confirmed' || order.orderStatus == 'processing' || order.orderStatus == 'handover')
-                ? Images.preparingFoodOrderDetails : Images.animateDeliveryMan, fit: BoxFit.contain, height: 180)),
-            const SizedBox(height: Dimensions.paddingSizeDefault),
+          //   ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset(order.orderStatus == 'pending' ? Images.pendingOrderDetails : (order.orderStatus == 'confirmed' || order.orderStatus == 'processing' || order.orderStatus == 'handover')
+          //       ? Images.preparingFoodOrderDetails : Images.animateDeliveryMan, fit: BoxFit.contain, height: 180)),
+          //  const SizedBox(height: Dimensions.paddingSizeDefault),
 
-            Text('your_food_will_delivered_within'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).disabledColor)),
-            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+          //   Text('your_food_will_delivered_within'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).disabledColor)),
+          //   const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-            Center(
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
+          //   Center(
+          //     child: Row(mainAxisSize: MainAxisSize.min, children: [
 
-                Text(
-                  DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt) < 5 ? '1 - 5'
-                      : '${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)-5} '
-                      '- ${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)}',
-                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
-                ),
-                const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+          //       Text(
+          //         DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt) < 5 ? '1 - 5'
+          //             : '${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)-5} '
+          //             '- ${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)}',
+          //         style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+          //       ),
+          //       const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                Text('min'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
-              ]),
-            ),
-            const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+          //       Text('min'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
+          //     ]),
+          //   ),
+          //  const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
-          ]) : const SizedBox() : const SizedBox(),
+          // ]) : const SizedBox() : const SizedBox(),
 
           (pastOrder) ? CustomImageWidget(
             image: '${order.restaurant!.coverPhotoFullUrl}',

@@ -1199,7 +1199,10 @@
 "all_food": "جميع الوجبات",
   "remaining": "متبقي",
   "sar": "ر.س",
-  "Restaurant_and_branch": "المطعم والفرع"
+  "Restaurant_and_branch": "المطعم والفرع",
+  "two_branches_available": "فرعين متاحين",
+  "available_branches": "فروع متاحه",
+  "available_branch": "فرع متاح"
   
 
 }

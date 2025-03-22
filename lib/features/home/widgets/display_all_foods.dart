@@ -15,10 +15,10 @@ import '../../../util/dimensions.dart';
 import '../../../util/styles.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../../favourite/controllers/favourite_controller.dart';
-import '../../my_food/domain/models/food_model.dart';
+import '../../food/domain/models/food_model.dart';
 import '../../restaurant/controllers/restaurant_controller.dart';
 import '../../restaurant/screens/restaurant_screen.dart';
-import '../../my_food/controller/foods_controller.dart';
+import '../../food/controller/foods_controller.dart';
 
 class DisplayAllFoods extends StatelessWidget {
   final Restaurant? restaurant;

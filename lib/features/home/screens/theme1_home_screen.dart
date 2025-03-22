@@ -1,5 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stackfood_multivendor/features/my_food/controller/foods_controller.dart';
+import 'package:stackfood_multivendor/features/food/controller/foods_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/home_screen.dart';
 import 'package:stackfood_multivendor/features/home/widgets/bad_weather_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/enjoy_off_banner_view_widget.dart';

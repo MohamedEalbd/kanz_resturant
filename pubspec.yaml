@@ -101,6 +101,7 @@ flutter:
     - assets/image/
     - assets/language/
     - assets/map/
+    - assets/icons/
 
   fonts:
     - family: Roboto

@@ -22,7 +22,7 @@ import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
 import '../../../util/styles.dart';
 import '../../language/controllers/localization_controller.dart';
-import '../../my_food/controller/foods_nearly_controller.dart';
+import '../../food/controller/foods_nearly_controller.dart';
 import '../controllers/advertisement_controller.dart';
 import '../domain/models/advertisement_model.dart';
 
@@ -35,9 +35,6 @@ class DisplayProductForNearByMe extends StatefulWidget {
 
 class _DisplayProductForNearByMeState extends State<DisplayProductForNearByMe> {
   final ScrollController scrollController = ScrollController();
-  final CarouselSliderController _carouselController = CarouselSliderController();
-  late bool _isLoggedIn;
-  // Logger logger =Logger();
 
   @override
   void initState() {

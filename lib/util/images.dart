@@ -388,4 +388,7 @@ class Images {
   static const String friends2 = "assets/icons/friends.svg";
   static const String myMoney = "assets/icons/money.svg";
   static const String foodDetails = "assets/image/food_details.png";
+  static const String locations = 'assets/icons/locations.svg';
+  static const String loc = 'assets/icons/loc.png';
+
 }

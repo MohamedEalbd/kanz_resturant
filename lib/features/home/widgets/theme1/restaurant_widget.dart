@@ -2,7 +2,7 @@ import 'package:stackfood_multivendor/common/widgets/rating_bar_widget.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:stackfood_multivendor/features/my_food/controller/foods_controller.dart';
+import 'package:stackfood_multivendor/features/food/controller/foods_controller.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';

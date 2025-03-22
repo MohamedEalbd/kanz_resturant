@@ -171,10 +171,10 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
-import '../features/my_food/controller/foods_controller.dart';
-import '../features/my_food/controller/foods_nearly_controller.dart';
-import '../features/my_food/domain/repository/food_repository.dart';
-import '../features/my_food/domain/repository/food_repository_imp.dart';
+import '../features/food/controller/foods_controller.dart';
+import '../features/food/controller/foods_nearly_controller.dart';
+import '../features/food/domain/repository/food_repository.dart';
+import '../features/food/domain/repository/food_repository_imp.dart';
 
 Future<Map<String, Map<String, String>>> init() async {
   /// Core
